@@ -1,0 +1,5 @@
+---
+vms:
+  - name: 'ubuntu-testbench'
+    bootstrap: 'scripts/bootstrap.sh'
+    cleanup: 'scripts/cleanup.sh'

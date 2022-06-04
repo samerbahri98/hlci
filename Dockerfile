@@ -34,7 +34,7 @@ RUN cat hlci_ansible.pub > /home/vagrant/.ssh/authorized_keys \
     && sed -i -e 's/Defaults.*requiretty/#&/' /etc/sudoers \
     && sed -i -e 's/\(UsePAM \)yes/\1 no/' /etc/ssh/sshd_config \
     && mkdir /var/run/sshd \
-    && pip install ansible=2.14 ansible-vault=2.9 yq=2.14.0
+    && pip install --no-cache-dir ansible==2.14 ansible-vault==2.9 yq==2.14.0
 
 EXPOSE 22
 

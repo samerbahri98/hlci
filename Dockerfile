@@ -30,7 +30,7 @@ RUN mkdir /var/run/sshd
 
 RUN apt-get -y install openssh-client python3-pip
 
-RUN pip install --no-cache-dir ansible ansible-vault yq
+RUN pip install ansible ansible-vault yq
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

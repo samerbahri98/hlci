@@ -2,7 +2,7 @@
 - name: "APT STREAMS"
   apt:
     name: "{{ apt_packages }}"
-    update_cache: no
+    update_cache: false
     state: present
   when: 
     - ansible_os_family == 'Debian'

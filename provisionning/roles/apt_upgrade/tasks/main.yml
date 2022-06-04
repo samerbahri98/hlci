@@ -1,0 +1,7 @@
+---
+- name: "APT UPDATE"
+  apt:
+    update_cache: yes
+    upgrade: safe
+  when:
+    - ansible_os_family == 'Debian'

@@ -28,7 +28,9 @@ RUN sed -i -e 's/\(UsePAM \)yes/\1 no/' /etc/ssh/sshd_config
 
 RUN mkdir /var/run/sshd
 
-RUN apt-get -y install openssh-client
+RUN apt-get -y install openssh-client python3-pip
+
+RUN pip install ansible ansible-vault yq
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

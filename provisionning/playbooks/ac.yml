@@ -1,0 +1,7 @@
+---
+- hosts: ac
+  roles:
+    - apt_upgrade
+    - streams
+
+    # - success_notification

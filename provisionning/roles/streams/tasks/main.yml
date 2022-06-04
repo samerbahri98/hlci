@@ -1,0 +1,13 @@
+---
+- name: "APT STREAMS"
+  apt:
+    name: "{{ apt_packages }}"
+    update_cache: no
+    state: present
+  when: 
+    - ansible_os_family == 'Debian'
+
+- name: "PIP STREAMS"
+  pip:
+    name: "{{ pip_packages }}"
+    state: present

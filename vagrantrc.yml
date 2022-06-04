@@ -1,5 +1,5 @@
 ---
 vms:
-  - name: 'ubuntu-testbench'
-    bootstrap: 'scripts/bootstrap.sh'
-    cleanup: 'scripts/cleanup.sh'
+  - name: 'ac'
+    bootstrap: 'provisionning/scripts/bootstrap.sh'
+    cleanup: 'provisionning/scripts/cleanup.sh'

@@ -15,6 +15,14 @@ rcfile["vms"].each do |vm_rc|
             machine.ssh.forward_agent = true
             machine.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=775,fmode=664"]
             machine.vm.provision "shell", path: vm_rc["bootstrap"]
+            machine.vm.provision "ansible_local" do |ansible|
+                ansible.verbose = "vvv"
+                ansible.install = false
+                ansible.playbook = "provisionning/playbooks/ac.yml"
+                ansible.inventory_path = "provisionning"
+                ansible.config_file = "ansible.cfg"
+                ansible.vault_password_file = "hlci_ansible_vault"
+            end
             machine.vm.provision "shell", path: vm_rc["cleanup"]
         end
     end

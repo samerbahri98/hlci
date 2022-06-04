@@ -1,2 +1,5 @@
 hlci_ansible
+hlci_ansible_vault
 .vagrant
+.vscode
+**.log

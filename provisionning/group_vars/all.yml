@@ -1,0 +1,7 @@
+---
+apt_packages:
+  - curl
+  - wget
+  - jq
+pip_packages:
+  - yq

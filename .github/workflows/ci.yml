@@ -17,12 +17,14 @@ jobs:
 
       - name: lint Dockerfile
         uses: hadolint/hadolint-action@v2.0.0
+        if: always()
         with:
           dockerfile: "**Dockerfile"
           recursive: true
       
       - name: lint yaml
         uses: karancode/yamllint-github-action@master
+        if: always()
         with:
           yamllint_file_or_dir: '.'
           yamllint_strict: false

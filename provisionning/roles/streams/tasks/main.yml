@@ -4,7 +4,7 @@
     name: "{{ apt_packages }}"
     update_cache: false
     state: present
-  when: 
+  when:
     - ansible_os_family == 'Debian'
 
 - name: "PIP STREAMS"

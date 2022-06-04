@@ -1,7 +1,7 @@
 ---
 name: "hlci ci"
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
   pull_request:
 
@@ -21,7 +21,7 @@ jobs:
         with:
           dockerfile: "**Dockerfile"
           recursive: true
-      
+
       - name: lint yaml
         uses: karancode/yamllint-github-action@master
         if: always()

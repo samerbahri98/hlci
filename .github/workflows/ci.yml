@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: lint Dockerfile
-        uses: hadolint/hadolint-action@v2.0.0
+        uses: hadolint/hadolint-action@v2.1.0
         if: always()
         with:
           dockerfile: "**Dockerfile"

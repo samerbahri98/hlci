@@ -1,0 +1,27 @@
+---
+- name: RUNDECK GROUP
+  group:
+    name: rundeck
+    state: present
+
+- name: RUNDECK USER
+  user:
+    name: rundeck
+    group: rundeck
+    groups:
+      - sudo
+    shell: /bin/bash
+    state: present
+    home: /home/rundeck
+    ssh_public_key: "{{ public_key }}"
+    ssh_key_file: "/vagrant/{{ private_key_name }}"
+    password: "{{ rundeck_password }}"
+
+- name: RUNDECK PASSWORDLESS SUDO
+  copy:
+    content: |
+      rundeck ALL=(ALL) NOPASSWD:ALL
+    dest: /etc/sudoers.d/hlci
+    owner: root
+    group: root
+    mode: 0440

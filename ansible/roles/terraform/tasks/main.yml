@@ -1,0 +1,24 @@
+---
+- name: 'TERRAFORM GPG KEY'
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'TERRAFORM APT REPOSITORY'
+  apt_repository:
+    repo: |
+      "deb [arch=amd64] https://apt.releases.hashicorp.com
+       {{ ansible_distribution_release }} main"
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'APT INSTALL TERRAFORM'
+  apt:
+    name: terraform
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'Debian'

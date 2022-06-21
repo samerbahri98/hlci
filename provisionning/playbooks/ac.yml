@@ -1,5 +1,0 @@
----
-- hosts: ac
-  roles:
-    - apt_upgrade
-    - streams

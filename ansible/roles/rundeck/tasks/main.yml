@@ -1,0 +1,96 @@
+---
+- name: 'TERRAFORM CREATE RUNDECK MySQL DB'
+  terraform:
+    project_path: '{{ terraform_project_path }}'
+    force_init: true
+    state: present
+    variables:
+      endpoint: '{{ mysql_endpoint }}'
+      root_username: '{{ mysql_root_username }}'
+      root_password: '{{ mysql_root_password }}'
+      dbname: '{{ rundeck_dbname }}'
+      db_username: '{{ rundeck_db_username }}'
+      db_password: '{{ rundeck_db_password }}'
+  environment:
+    RUNDECK_DATABASE_DRIVER: 'org.mysql.driver'
+    RUNDECK_DATABASE_USERNAME: '{{ rundeck_db_username }}'
+    RUNDECK_DATABASE_PASSWORD: '{{ rundeck_db_password }}'
+    RUNDECK_DATABASE_URL: |
+      jdbc:mysql://{{ mysql_endpoint }}
+      /rundeck?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    RUNDECK_GRAILS_URL: http://localhost:4440
+
+- name: 'APT INSTALL OPENJDK 11 HEADLESS'
+  apt:
+    name: openjdk-11-jre-headless
+    update_cache: false
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'RUNDECK GPG KEY'
+  apt_key:
+    url: https://packages.rundeck.com/pagerduty/rundeck/gpgkey
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'RUNDECK APT REPOSITORY 1'
+  apt_repository:
+    repo: 'deb https://packages.rundeck.com/pagerduty/rundeck/any/ any main'
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'RUNDECK APT REPOSITORY 2'
+  apt_repository:
+    repo: 'deb-src https://packages.rundeck.com/pagerduty/rundeck/any/ any main'
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'APT INSTALL RUNDECK'
+  apt:
+    name: rundeck
+    update_cache: true
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: RUNDECKD RUNDECK-CONFIG PROPERTIES
+  become: true
+  template:
+    src: 'rundeck-config.properties.j2'
+    dest: /etc/rundeck/rundeck-config.properties
+    mode: +r
+    owner: rundeck
+    group: rundeck
+
+- name: RUNDECKD REALM PROPERTIES
+  become: true
+  template:
+    src: 'realm.properties.j2'
+    dest: /etc/rundeck/realm.properties
+    mode: +r
+    owner: rundeck
+    group: rundeck
+
+- name: RUNDECKD FRAMEWORK PROPERTIES
+  become: true
+  template:
+    src: 'framework.properties.j2'
+    dest: /etc/rundeck/framework.properties
+    mode: +r
+    owner: rundeck
+    group: rundeck
+
+- name: RUNDECK SSH KEY
+  become: true
+  copy:
+    src: '/vagrant/{{ private_key_name }}'
+    dest: '{{ private_key_directory }}/{{ private_key_name }}'
+    mode: +r
+    owner: rundeck
+    group: rundeck
+
+- name: 'RUNDECK START'
+  become: true
+  command: service rundeckd start

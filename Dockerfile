@@ -44,4 +44,6 @@ RUN cat hlci_ansible.pub > /home/vagrant/.ssh/authorized_keys \
 
 EXPOSE 22
 
+EXPOSE 4440
+
 CMD ["/usr/sbin/sshd", "-D"]

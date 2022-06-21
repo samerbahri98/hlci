@@ -1,0 +1,37 @@
+#loglevel.default is the default log level for jobs: ERROR,WARN,INFO,VERBOSE,DEBUG
+loglevel.default=INFO
+rdeck.base=/var/lib/rundeck
+
+#rss.enabled if set to true enables RSS feeds that are public (non-authenticated)
+rss.enabled=false
+# change hostname here
+grails.serverURL=http://localhost:4440
+dataSource.dbCreate = none
+dataSource.driverClassName = org.mariadb.jdbc.Driver
+dataSource.url = jdbc:mysql://{{ mysql_endpoint }}/rundeck?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+dataSource.username ={{ rundeck_db_username }}
+dataSource.password ={{ rundeck_db_password }}
+grails.plugin.databasemigration.updateOnStart=true
+
+# Encryption for key storage
+rundeck.storage.provider.1.type=db
+rundeck.storage.provider.1.path=keys
+
+rundeck.storage.converter.1.type=jasypt-encryption
+rundeck.storage.converter.1.path=keys
+rundeck.storage.converter.1.config.encryptorType=custom
+rundeck.storage.converter.1.config.password=c7d15f697cb06bc9
+rundeck.storage.converter.1.config.algorithm=PBEWITHSHA256AND128BITAES-CBC-BC
+rundeck.storage.converter.1.config.provider=BC
+
+# Encryption for project config storage
+rundeck.projectsStorageType=db
+
+rundeck.config.storage.converter.1.type=jasypt-encryption
+rundeck.config.storage.converter.1.path=projects
+rundeck.config.storage.converter.1.config.password=c7d15f697cb06bc9
+rundeck.config.storage.converter.1.config.encryptorType=custom
+rundeck.config.storage.converter.1.config.algorithm=PBEWITHSHA256AND128BITAES-CBC-BC
+rundeck.config.storage.converter.1.config.provider=BC
+
+rundeck.feature.repository.enabled=true

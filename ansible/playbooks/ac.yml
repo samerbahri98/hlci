@@ -1,0 +1,8 @@
+---
+- hosts: ac
+  roles:
+    - apt_upgrade
+    - common_essential_softwares
+    - zerotier
+    - terraform
+    - rundeck

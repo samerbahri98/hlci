@@ -1,12 +1,15 @@
 # infrastructure
 hlci_ansible
 hlci_ansible_vault
+ansible/group_vars/*.yml
+ansible/host_vars/*.yml
+ansible/roles/*/vars/*.yml
 .vagrant
-.vscode
 **.log
 node_modules
-
-
+.terraform*
+*.tfstate*
+*.tfvars*
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
@@ -47,3 +50,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+.gitsecret/keys/random_seed

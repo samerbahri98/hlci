@@ -1,5 +1,5 @@
 ---
 vms:
   - name: 'ac'
-    bootstrap: 'provisionning/scripts/bootstrap.sh'
-    cleanup: 'provisionning/scripts/cleanup.sh'
+    bootstrap: 'ansible/scripts/bootstrap.sh'
+    cleanup: 'ansible/scripts/cleanup.sh'

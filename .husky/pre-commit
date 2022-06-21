@@ -3,3 +3,4 @@
 
 yamllint .
 git secret hide
+git add *.secret

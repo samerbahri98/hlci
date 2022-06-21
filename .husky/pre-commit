@@ -2,5 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yamllint .
+ansible-lint --force-color --offline -p --project-dir .
 git secret hide
 git add *.secret

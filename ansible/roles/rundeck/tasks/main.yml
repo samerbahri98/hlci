@@ -93,4 +93,6 @@
 
 - name: 'RUNDECK START'
   become: true
-  command: service rundeckd start
+  service:
+    name: rundeckd
+    state: started

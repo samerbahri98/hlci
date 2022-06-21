@@ -29,3 +29,10 @@ jobs:
           yamllint_file_or_dir: '.'
           yamllint_strict: false
           yamllint_comment: true
+
+      - name: lint ansible
+        uses: ansible/ansible-lint-action@master
+        if: always()
+        with:
+          targets: "./"
+          args: "-p"

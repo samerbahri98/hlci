@@ -1,10 +1,12 @@
 ---
 - name: RUNDECK GROUP
+  become: true
   group:
     name: rundeck
     state: present
 
 - name: RUNDECK USER
+  become: true
   user:
     name: rundeck
     group: rundeck
@@ -13,11 +15,11 @@
     shell: /bin/bash
     state: present
     home: /home/rundeck
-    ssh_public_key: "{{ public_key }}"
     ssh_key_file: "/vagrant/{{ private_key_name }}"
     password: "{{ rundeck_password }}"
 
 - name: RUNDECK PASSWORDLESS SUDO
+  become: true
   copy:
     content: |
       rundeck ALL=(ALL) NOPASSWD:ALL
@@ -25,3 +27,9 @@
     owner: root
     group: root
     mode: 0440
+
+- name: RUNDECK SSH KEY
+  become: true
+  authorized_key:
+    user: rundeck
+    key: "{{ lookup('file','/vagrant/hlci_ansible.pub') }}"

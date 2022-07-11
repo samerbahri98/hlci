@@ -3,6 +3,7 @@
   roles:
     - apt_upgrade
     - common_essential_softwares
-    - zerotier
+    # - zerotier
     - terraform
-    - rundeck
+    # - rundeck
+    # - rundeck_user

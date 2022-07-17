@@ -5,6 +5,8 @@ yaml-files:
   - '.yamllint'
 ignore: |
   node_modules
+  kubespray
+  ./**/playbooks/roles
 rules:
   braces: enable
   brackets: enable

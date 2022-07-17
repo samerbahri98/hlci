@@ -8,9 +8,9 @@
 
 - name: 'TERRAFORM APT REPOSITORY'
   apt_repository:
-    repo: |
-      "deb [arch=amd64] https://apt.releases.hashicorp.com
-       {{ ansible_distribution_release }} main"
+    repo: >
+      deb [arch=amd64] https://apt.releases.hashicorp.com
+       {{ ansible_distribution_release }} main
     state: present
   when:
     - ansible_os_family == 'Debian'

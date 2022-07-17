@@ -5,13 +5,13 @@ rcfile = YAML.load_file("#{current_dir}/vagrantrc.yml")
 
 rcfile["vms"].each do |vm_rc|
     Vagrant.configure("2") do |config|
-        config.ssh.private_key_path = "hlci_ansible"
+        # config.ssh.private_key_path = "hlci_ansible"
         config.vm.define vm_rc["name"] do |machine|
-            machine.vm.provider "docker" do |d|
-                d.build_dir =  "."
-                d.has_ssh = true
-                d.remains_running = false
-                d.ports = ["4440:4440"]
+            machine.vm.box = "ubuntu/focal64"
+            machine.vm.provider :virtualbox do |v|
+                v.gui = true
+                v.memory = 4096
+                v.cpus =2
             end
             machine.ssh.forward_agent = true
             machine.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=775,fmode=664"]

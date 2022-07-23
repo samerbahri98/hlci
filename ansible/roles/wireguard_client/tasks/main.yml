@@ -1,0 +1,28 @@
+---
+- name: GATHER FACTS
+  setup:
+
+- name: INSTALL WIREGUARD
+  import_tasks: 'install/ubuntu.yml'
+
+- name: FETCH WIREGUARD PEER CONF
+  uri:
+    url: '{{ wireguard_server_url }}/{{ peer }}/{{ peer }}.conf'
+    method: 'GET'
+    url_username: '{{ wireguard_username }}'
+    url_password: '{{ wireguard_password }}'
+    return_content: true
+  register: peer_conf
+
+- name: SAVE WIREGUARD PEER CONF
+  become: true
+  copy:
+    content: '{{ peer_conf.content }}'
+    dest: /etc/wireguard/wg0.conf
+    mode: 0644
+
+- name: START WIREGUARD AT BOOT
+  systemd:
+    name: wg-quick@wg0
+    state: started
+    enabled: true

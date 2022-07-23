@@ -23,7 +23,7 @@ rcfile["vms"].each do |vm_rc|
                 ansible.inventory_path = "ansible"
                 ansible.config_file = "ansible.cfg"
                 ansible.vault_password_file = "hlci_ansible_vault"
-                ansible.galaxy_role_file = "ansible/galaxy/requirements.yml"
+                # ansible.galaxy_role_file = "ansible/galaxy/requirements.yml"
             end
             machine.vm.provision "shell", path: vm_rc["cleanup"]
         end

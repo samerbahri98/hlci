@@ -3,7 +3,9 @@
   roles:
     - apt_upgrade
     - common_essential_softwares
+    - wireguard_client
     # - zerotier
-    - terraform
+    # - terraform
+    # - container-runtime
     # - rundeck
-    # - rundeck_user
+    - rundeck_user

@@ -14,6 +14,7 @@ rcfile["vms"].each do |vm_rc|
                 v.cpus =2
             end
             machine.ssh.forward_agent = true
+            machine.vm.network "forwarded_port", guest: 2222, host: 2222
             machine.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=775,fmode=664"]
             machine.vm.provision "shell", path: vm_rc["bootstrap"]
             machine.vm.provision "ansible_local" do |ansible|

@@ -28,8 +28,5 @@
     group: root
     mode: 0440
 
-- name: RUNDECK SSH KEY
-  become: true
-  authorized_key:
-    user: rundeck
-    key: "{{ lookup('file','/vagrant/hlci_ansible.pub') }}"
+- name: RUNDECK SSH
+  import_tasks: ssh.yml

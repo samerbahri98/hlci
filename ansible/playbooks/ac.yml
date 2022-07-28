@@ -4,8 +4,6 @@
     - apt_upgrade
     - common_essential_softwares
     - wireguard_client
-    # - zerotier
-    # - terraform
-    # - container-runtime
-    # - rundeck
+    - zerotier
+    - terraform
     - rundeck_user

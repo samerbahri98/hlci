@@ -13,7 +13,7 @@
     mode: u=rwX,g=rwX,o=r
     state: directory
   become: true
-    
+
 - name: SSH AGENT CONFIG
   copy:
     content: |
@@ -34,8 +34,9 @@
   become: true
 
 - name: SSH AGENT ENABLE
-  environment: 
-    SSH_AUTH_SOCK: "{{ lookup('ansible.builtin.env','XDG_RUNTIME_DIR') }}/ssh-agent.socket"
+  environment:
+    SSH_AUTH_SOCK: |
+      "{{ lookup('ansible.builtin.env','XDG_RUNTIME_DIR') }}/ssh-agent.socket"
   systemd:
     name: ssh-agent
     state: started

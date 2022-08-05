@@ -1,0 +1,24 @@
+---
+- name: 'APT INSTALL FAIL2BAN'
+  apt:
+    name: fail2ban
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'YUM INSTALL FAIL2BAN'
+  apt:
+    name: fail2ban
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'RedHat' and ansible_distribution_major_version <= 7
+
+- name: 'DNF INSTALL FAIL2BAN'
+  apt:
+    name: fail2ban
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'RedHat' and ansible_distribution_major_version >= 8

@@ -1,0 +1,20 @@
+---
+- name: 'INSTALL FAIL2BAN'
+  import_tasks: install.yml
+
+- name: 'FAIL2BAN CONF'
+  template:
+    src: jail.local.j2
+    dest: /etc/fail2ban/jail.local
+    mode: +r
+    owner: root
+    group: root
+  become: true
+
+- name: SYSTEMD ENABLE FAIL2BAN
+  systemd:
+    name: fail2ban
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  become: true

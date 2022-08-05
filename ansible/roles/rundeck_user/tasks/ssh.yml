@@ -32,15 +32,3 @@
     group: rundeck
     mode: u=rw,g=rw
   become: true
-
-- name: SSH AGENT ENABLE
-  environment:
-    SSH_AUTH_SOCK: |
-      "{{ lookup('ansible.builtin.env','XDG_RUNTIME_DIR') }}/ssh-agent.socket"
-  systemd:
-    name: ssh-agent
-    state: started
-    enabled: true
-    daemon_reload: true
-  become: true
-  become_user: rundeck

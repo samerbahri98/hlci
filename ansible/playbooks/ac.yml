@@ -4,6 +4,6 @@
     - apt_upgrade
     - common_essential_softwares
     - wireguard_client
-    - zerotier
     - terraform
     - rundeck_user
+    - fail2ban

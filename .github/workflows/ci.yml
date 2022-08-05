@@ -1,5 +1,5 @@
 ---
-name: "hlci ci"
+name: "CI"
 
 on:  # yamllint disable-line rule:truthy
   push:

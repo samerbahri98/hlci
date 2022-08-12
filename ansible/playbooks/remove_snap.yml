@@ -1,0 +1,4 @@
+---
+- hosts: homenet
+  roles:
+    - remove_snap

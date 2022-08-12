@@ -1,0 +1,13 @@
+---
+- name: SYSTEMD | STOP SNAPD
+  systemd:
+    name: snapd
+    state: stopped
+
+- name: APT | REMOVE SNAP
+  apt:
+    name: snapd
+    state: absent
+    purge: true
+  when:
+    - ansible_os_family == 'Debian'

@@ -1,28 +1,28 @@
 ---
 - name: FETCH KUBECTL STABLE
   uri:
-    url: >
-      https://storage.googleapis.com/
-      kubernetes-release/release/stable.txt
+    url:
+      "https://storage.googleapis.com/\
+      kubernetes-release/release/stable.txt"
     method: 'GET'
     return_content: true
   register: kubectl_stable
 
 - name: FETCH KUBECTL SHA256SUM
   uri:
-    url: >
-      'https://dl.k8s.io/{{ kubectl_stable.content }}
-      /bin/linux/amd64/kubectl.sha256'
+    url:
+      "https://dl.k8s.io/{{ kubectl_stable.content }}/\
+      bin/linux/amd64/kubectl.sha256"
     method: 'GET'
     return_content: true
   register: kubectl_sha256sum
 
 - name: DOWNLOAD KUBECTL STABLE
   get_url:
-    url: >
-      'https://dl.k8s.io/release/
-      {{ kubectl_stable.content }}
-      /bin/linux/amd64/kubectl'
+    url:
+      "https://dl.k8s.io/release/\
+      {{ kubectl_stable.content }}\
+      /bin/linux/amd64/kubectl"
     dest: /tmp/kubectl
     owner: root
     group: root

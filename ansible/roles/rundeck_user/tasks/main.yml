@@ -16,7 +16,7 @@
     state: present
     home: /home/rundeck
     ssh_key_file: "/vagrant/{{ private_key_name }}"
-    password: "{{ rundeck_password }}"
+    password: "{{ rundeck_password | password_hash('sha512') }}"
 
 - name: RUNDECK PASSWORDLESS SUDO
   become: true

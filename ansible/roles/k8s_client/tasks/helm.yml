@@ -1,0 +1,20 @@
+---
+- name: DOWNLOAD HELM
+  get_url:
+    url: 'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3'
+    dest: /tmp/get_helm.sh
+    owner: root
+    group: root
+    mode: 0755
+
+- name: INSTALL HELM
+  command:
+    cmd: /tmp/get_helm.sh
+  become: true
+  when: true
+
+- name: DELETE HELM INSTALLATION
+  file:
+    path: /tmp/get_helm.sh
+    state: absent
+  become: true

@@ -1,0 +1,9 @@
+---
+- name: KUBECTL
+  import_tasks: kubectl.yml
+
+- name: HELM
+  import_tasks: helm.yml
+
+- name: K9S
+  import_tasks: k9s.yml

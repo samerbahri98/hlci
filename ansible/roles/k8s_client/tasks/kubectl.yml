@@ -1,0 +1,52 @@
+---
+- name: FETCH KUBECTL STABLE
+  uri:
+    url: >
+      https://storage.googleapis.com/
+      kubernetes-release/release/stable.txt
+    method: 'GET'
+    return_content: true
+  register: kubectl_stable
+
+- name: FETCH KUBECTL SHA256SUM
+  uri:
+    url: >
+      'https://dl.k8s.io/{{ kubectl_stable.content }}
+      /bin/linux/amd64/kubectl.sha256'
+    method: 'GET'
+    return_content: true
+  register: kubectl_sha256sum
+
+- name: DOWNLOAD KUBECTL STABLE
+  get_url:
+    url: >
+      'https://dl.k8s.io/release/
+      {{ kubectl_stable.content }}
+      /bin/linux/amd64/kubectl'
+    dest: /tmp/kubectl
+    owner: root
+    group: root
+    mode: 0755
+
+- name: CHECK KUBECTL SHA256SUM
+  stat:
+    path: /tmp/kubectl
+    checksum_algorithm: sha256
+    get_checksum: true
+  register: found_sha256sum
+  become: true
+
+- name: INSTALL KUBECTL STABLE
+  copy:
+    src: /tmp/kubectl
+    dest: /usr/local/bin/kubectl
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: DELETE KUBECTL INSTALLATION
+  file:
+    path: /tmp/kubectl
+    state: absent
+  become: true

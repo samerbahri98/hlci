@@ -1,0 +1,26 @@
+---
+- name: DOWNLOAD K9S
+  get_url:
+    url: >
+     https://github.com/derailed/k9s/releases/download/
+     {{ k9s_version }}/k9s_Linux_x86_64.tar.gz
+    dest: /tmp/k9s.tar.gz
+    owner: root
+    group: root
+    mode: 0755
+
+- name: INSTALL K9S
+  unarchive:
+    src: /tmp/k9s.tar.gz
+    dest: /usr/local/bin
+    copy: false
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: DELETE K9S INSTALLATION
+  file:
+    path: /tmp/k9s.tar.gz
+    state: absent
+  become: true

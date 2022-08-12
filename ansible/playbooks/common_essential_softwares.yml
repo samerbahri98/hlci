@@ -1,0 +1,4 @@
+---
+- hosts: homenet
+  roles:
+    - common_essential_softwares

@@ -1,0 +1,44 @@
+---
+- name: DOT OHMYZSH | ASSERT EXIST ROOT
+  stat:
+    path: /root/.ohmyzsh
+  become: true
+  register: ohmyzsh_root
+- name: APT | INSTALL ZSH
+  apt:
+    name: zsh
+    state: present
+    update_cache: true
+- name: OHMYZSH | DOWNLOAD
+  get_url:
+    url:
+      "https://raw.github.com/ohmyzsh/ohmyzsh\
+      /master/tools/install.sh"
+    dest: /tmp/ohmyzsh_install.sh
+    owner: root
+    group: root
+    mode: 0755
+- name: USER | SET ZSH ROOT
+  user:
+    name: '{{ ansible_user_id }}'
+    shell: /bin/zsh
+  become: true
+- name: USER | SET ZSH
+  user:
+    name: rundeck
+    shell: /bin/zsh
+  become: true
+- name: OHMYZSH | INSTALL
+  command:
+    cmd: /tmp/ohmyzsh_install.sh
+  when: true
+- name: OHMYZSH | INSTALL
+  command:
+    cmd: /tmp/ohmyzsh_install.sh
+  become: true
+  when: true
+- name: OHMYZSH | DELETE INSTALLER
+  file:
+    path: /tmp/ohmyzsh_install.sh
+    state: absent
+  become: true

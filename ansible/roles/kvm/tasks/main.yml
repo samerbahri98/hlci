@@ -1,0 +1,36 @@
+---
+- name: "APT | KVM PACKAGES"
+  apt:
+    name: "{{ apt_packages }}"
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+- name: "SYSTEMD | ENABLE LIBVIRTD"
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+- name: "USER | KVM LIBVIRT GROUP"
+  user:
+    name: rundeck
+    groups:
+      - "kvm"
+      - "libvirt"
+- name: "NETPLAN | NETCFG.YML"
+  become: true
+  template:
+    src: '01-netcfg.yaml.j2'
+    dest: /etc/netplan/01-netcfg.yaml
+    mode: +r
+    owner: root
+    group: root
+- name: "NETPLAN | NETPLAN APPLY"
+  become: true
+  command:
+    cmd: netplan apply
+  when: true
+- name: "VAGRANT | LIBVIRT PLUGIN"
+  command:
+    cmd: vagrant plugin install vagrant-libvirt
+  when: true

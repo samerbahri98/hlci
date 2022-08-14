@@ -1,3 +1,6 @@
 [submodule "ansible/roles/kubespray"]
 	path = ansible/roles/kubespray
 	url = https://github.com/kubernetes-sigs/kubespray.git
+[submodule "ansible/roles/ansible-role-docker"]
+	path = ansible/roles/ansible-role-docker
+	url = https://github.com/geerlingguy/ansible-role-docker.git

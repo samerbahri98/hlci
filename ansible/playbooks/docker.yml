@@ -1,0 +1,4 @@
+---
+- hosts: ac
+  roles:
+    - ansible-role-docker

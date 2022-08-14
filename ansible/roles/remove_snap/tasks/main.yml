@@ -3,6 +3,7 @@
   systemd:
     name: snapd
     state: stopped
+  failed_when: false
 
 - name: APT | REMOVE SNAP
   apt:
@@ -11,3 +12,4 @@
     purge: true
   when:
     - ansible_os_family == 'Debian'
+  failed_when: false

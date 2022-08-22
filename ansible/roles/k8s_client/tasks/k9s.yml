@@ -12,8 +12,8 @@
 - name: INSTALL K9S
   unarchive:
     src: /tmp/k9s.tar.gz
+    remote_src: true
     dest: /usr/local/bin
-    copy: false
     owner: root
     group: root
     mode: 0755

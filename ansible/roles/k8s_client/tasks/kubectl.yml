@@ -39,6 +39,7 @@
 - name: INSTALL KUBECTL STABLE
   copy:
     src: /tmp/kubectl
+    remote_src: true
     dest: /usr/local/bin/kubectl
     owner: root
     group: root

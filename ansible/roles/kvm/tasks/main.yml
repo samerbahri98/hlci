@@ -30,7 +30,14 @@
   command:
     cmd: netplan apply
   when: true
-- name: "VAGRANT | LIBVIRT PLUGIN"
-  command:
-    cmd: vagrant plugin install vagrant-libvirt
-  when: true
+- name: SYSTEMD | START COCKPIT
+  systemd:
+    enabled: true
+    state: started
+    name: cockpit
+- name: UFW | ENABLE COCKPIT
+  community.general.ufw:
+    port: 9090
+    proto: tcp
+    log: true
+    rule: allow

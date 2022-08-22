@@ -1,0 +1,4 @@
+---
+- name: container-runtime
+  import_role:
+    name: docker

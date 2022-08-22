@@ -1,4 +1,4 @@
 ---
-- hosts: ac
+- hosts: hp3-local
   roles:
     - ansible-role-docker

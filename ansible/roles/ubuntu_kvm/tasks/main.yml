@@ -1,0 +1,14 @@
+---
+- name: KVM | CREATE MACHINE
+  community.libvirt.virt:
+    autostart: true
+    command: define
+    name: "{{ vm_name }}"
+    xml: "{{ lookup('template','ubuntu.xml.j2') }}"
+
+- name: KVM | DEPLOY MACHINE
+  community.libvirt.virt:
+    autostart: true
+    command: create
+    name: "{{ vm_name }}"
+    state: running

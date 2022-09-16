@@ -1,11 +1,19 @@
 ---
-- name: RUNDECK SSH KEY
+- name: SSH | PUBLIC KEY
   become: true
   authorized_key:
     user: rundeck
     key: "{{ lookup('file','/vagrant/hlci_ansible.pub') }}"
+- name: SSH | DIRECTORY
+  file:
+    name: /home/rundeck/.ssh
+    group: rundeck
+    owner: rundeck
+    mode: u=rwX,g=rwX,o=r
+    state: directory
+  become: true
 
-- name: SSH SYSTEMD DIRECTORY
+- name: SYSTEMD | DIRECTORY
   file:
     name: /home/rundeck/.config/systemd/user
     group: rundeck
@@ -14,7 +22,7 @@
     state: directory
   become: true
 
-- name: SSH AGENT CONFIG
+- name: SSH | AGENT CONFIG
   copy:
     content: |
       [Unit]
@@ -32,3 +40,36 @@
     group: rundeck
     mode: u=rw,g=rw
   become: true
+- name: SSH | PRIVATE KEY
+  copy:
+    src: /vagrant/hlci_ansible
+    dest: /home/rundeck/.ssh/hlci_ansible
+    owner: rundeck
+    group: rundeck
+    mode: 0400
+- name: SSH | LOCAL CONFIG
+  copy:
+    content: |
+      Host *
+        UserKnownHostsFile=/dev/null
+        StrictHostKeyChecking no
+        PasswordAuthentication no
+        IdentitiesOnly yes
+        ForwardAgent yes
+        ForwardX11 yes
+        IdentityAgent SSH_AUTH_SOCK
+        AddKeysToAgent yes
+        IdentityFile ~/.ssh/hlci_ansible
+        User rundeck
+        LogLevel FATAL
+    dest: /home/rundeck/.ssh/config
+    owner: rundeck
+    group: rundeck
+    mode: u=rw
+- name: SYSTEMD | ENABLE SSH_AGENT
+  systemd:
+    name: ssh-agent
+    state: restarted
+    enabled: true
+    daemon_reload: true
+  failed_when: false

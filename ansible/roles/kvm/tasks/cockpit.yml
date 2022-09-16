@@ -1,0 +1,24 @@
+---
+- name: SYSTEMD | ENABLE COCKPIT
+  systemd:
+    enabled: true
+    state: started
+    name: cockpit
+- name: UFW | ENABLE COCKPIT
+  community.general.ufw:
+    port: 9090
+    proto: tcp
+    log: true
+    rule: allow
+# - name: COPY | COCKPIT MACHINES
+#   copy:
+#     src: servers.json
+#     dest: /etc/cockpit/machines.d/servers.json
+#     mode: 0444
+#     owner: root
+#     group: root
+- name: COPY | COCKPIT MACHINES
+  file:
+    path: /etc/cockpit/machines.d/servers.json
+    state: absent
+  become: true

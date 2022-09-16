@@ -1,0 +1,18 @@
+---
+- name: "STAT | ASSERT IMG SHA256"
+  stat:
+    checksum_algorithm: sha256
+    follow: true
+    path: "{{ kvm_img_dir }}/{{ ubuntu_img_name }}"
+  register: st_img
+- name: "DOWNLOAD | UBUNTU IMG"
+  get_url:
+    url:
+      "https://cloud-images.ubuntu.com/focal/current\
+      /{{ ubuntu_img_name }}"
+    dest: "{{ kvm_img_dir }}"
+    group: root
+    owner: root
+    mode: 0755
+  when: not st_img.stat.exists or st_img.stat.checksum != ubuntu_img_sha256
+  become: true

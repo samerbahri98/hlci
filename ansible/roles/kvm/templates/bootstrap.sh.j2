@@ -1,0 +1,9 @@
+#!/bin/sh
+
+id -u rundeck &>/dev/null || addgroup rundeck 
+
+id -u rundeck &>/dev/null || useradd -p $(openssl passwd -1 rundeck) -d /home/rundeck -g rundeck rundeck
+
+su rundeck
+
+ssh-import-id gh:samerbahri98

@@ -1,23 +1,13 @@
 ---
-- name: "APT | KVM PACKAGES"
+- name: 'APT | KVM PACKAGES'
   apt:
-    name: "{{ apt_packages }}"
+    name: '{{ apt_packages }}'
     update_cache: true
     state: present
   when:
     - ansible_os_family == 'Debian'
-- name: "SYSTEMD | ENABLE LIBVIRTD"
-  systemd:
-    name: libvirtd
-    state: started
-    enabled: true
-- name: "USER | KVM LIBVIRT GROUP"
-  user:
-    name: rundeck
-    groups:
-      - "kvm"
-      - "libvirt"
-- name: "NETPLAN | NETCFG.YML"
+
+- name: 'NETPLAN | NETCFG.YML'
   become: true
   template:
     src: '01-netcfg.yaml.j2'
@@ -25,19 +15,22 @@
     mode: +r
     owner: root
     group: root
-- name: "NETPLAN | NETPLAN APPLY"
+
+- name: 'NETPLAN | NETPLAN APPLY'
   become: true
   command:
     cmd: netplan apply
   when: true
-- name: SYSTEMD | START COCKPIT
-  systemd:
-    enabled: true
-    state: started
-    name: cockpit
-- name: UFW | ENABLE COCKPIT
-  community.general.ufw:
-    port: 9090
-    proto: tcp
-    log: true
-    rule: allow
+
+- name: LIBVIRT | PREPARE
+  import_tasks: libvirt.yml
+
+- name: COCKPIT | PREPARE
+  import_tasks: cockpit.yml
+
+- name: UBUNTU | DOWNLOAD
+  import_tasks: ubuntu.20.04.yml
+
+- name: REBOOT
+  reboot:
+    connect_timeout: 60

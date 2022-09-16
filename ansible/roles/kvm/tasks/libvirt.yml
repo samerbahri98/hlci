@@ -1,0 +1,29 @@
+---
+- name: 'SYSTEMD | ENABLE LIBVIRTD'
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+- name: 'USER | KVM LIBVIRT GROUP'
+  user:
+    name: rundeck
+    groups:
+      - 'kvm'
+      - 'libvirt'
+    append: true
+- name: 'LIBVIRT | QEMU HOOK'
+  become: true
+  template:
+    src: 'qemu.j2'
+    dest: /etc/libvirt/hooks/qemu
+    mode: +rx
+    owner: root
+    group: root
+- name: 'LIBVIRT | BOOTSTRAP SCRIPT'
+  become: true
+  template:
+    src: 'bootstrap.sh.j2'
+    dest: /bootstrap.sh
+    mode: +rx
+    owner: root
+    group: root

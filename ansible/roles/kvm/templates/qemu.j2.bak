@@ -1,0 +1,30 @@
+#!/bin/sh
+
+IMGURL=$(virsh dumpxml "${1}" | xq '.domain.devices.disk.source["@file"]')
+readonly IMGURL
+case "${2}" in
+    start)
+        virt-sysprep -a $IMGURL --script /bootstrap.sh
+        ;;
+    *)
+        echo "Invalid option"
+        ;;
+esac
+
+unset IMGURL
+
+#!/bin/sh
+
+IMGURL=$(virsh dumpxml "${1}" | xq '.domain.devices.disk.source["@file"]')
+readonly IMGURL
+case "${2}" in
+    start)
+        virt-sysprep -a $IMGURL --script /bootstrap.sh
+        ;;
+    *)
+        echo "Invalid option"
+        exit 1
+        ;;
+esac
+
+unset IMGURL

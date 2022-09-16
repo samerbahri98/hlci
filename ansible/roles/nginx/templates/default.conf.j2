@@ -1,0 +1,8 @@
+server {
+    server_name cockpit.hp3-local.hlci.local;
+    listen 80 ;
+    access_log /var/log/nginx/access.log vhost;
+    	location / {
+		proxy_pass http://localhost:9090;
+	} 
+}

@@ -1,0 +1,36 @@
+---
+- name: APT | INSTALL NFS
+  apt:
+    name: nfs-kernel-server
+    state: present
+    update_cache: true
+- name: STAT | ASSERT ISO SHA256
+  stat:
+    checksum_algorithm: sha256
+    follow: true
+    path: "{{ kvm_img_dir }}/{{ omv_iso_name }}"
+  register: st_iso
+- name: DOWNLOAD | ISO
+  get_url:
+    url:
+      "https://nav.dl.sourceforge.net/project/openmediavault\
+      /{{ omv_version }}/{{ omv_iso_name }}"
+    dest: "{{ kvm_img_dir }}"
+    group: root
+    owner: root
+    mode: 0755
+  when: not st_iso.stat.exists or st_iso.stat.checksum != omv_iso_sha256
+  become: true
+# - name: LIBVIRT | DEFINE VM
+#   community.libvirt.virt:
+#     autostart: true
+#     command: define
+#     name: OMV
+#     xml: "{{ lookup('template', 'omv.xml.j2') }}"
+
+# - name: LIBVIRT | DEPLOY VM
+#   community.libvirt.virt:
+#     autostart: true
+#     command: create
+#     name: OMV
+#     # xml: "{{ lookup('template', 'omv.xml.j2') }}"

@@ -1,0 +1,14 @@
+<domain type='qemu'>
+  <memory unit="Gib">2</memory>
+  <currentMemory unit="Gib">2</currentMemory>
+  <vcpu>1</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc'>hvm</type>
+    <boot dev='hd' />
+    <kernel>/opt/windriver/bzImage-qemux86-64.bin</kernel>
+    <cmdline>console=ttyS0 root=/dev/vda rw ip=dhcp</cmdline>
+  </os>
+  <devices>
+    <graphics type='vnc' port='-1' keymap='de'/>
+  </devices>
+</domain>

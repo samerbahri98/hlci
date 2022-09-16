@@ -1,0 +1,41 @@
+---
+- name: SYSCTL | LOAD IPv4 CONF
+  become: true
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_file: /etc/sysctl.conf
+- name: SYSCTL | DISABLE IPv6
+  become: true
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: 1
+    sysctl_file: /etc/sysctl.conf
+- name: SYSCTL | DISABLE IPv6 DEFAULT
+  become: true
+  ansible.posix.sysctl:
+    name: net.ipv6.conf.default.disable_ipv6
+    value: 1
+    sysctl_file: /etc/sysctl.conf
+- name: PROCPS | RESTART
+  command:
+    cmd: /etc/init.d/procps restart
+  become: true
+  changed_when: false
+  failed_when: false
+- name: FILE | wg0.network
+  become: true
+  copy:
+    content: |
+      [Match]
+      Name=wg0
+      [Network]
+      IPForward=ipv4
+    dest: /etc/systemd/network/wg0.network
+    owner: root
+    group: root
+    mode: 0440
+- name: reboot
+  reboot:
+    connect_timeout: 60
+  become: true

@@ -1,0 +1,25 @@
+---
+- name: 'GPG | OMV KEY'
+  apt_key:
+    url: https://packages.openmediavault.org/public/archive.key
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'APT REPOSITORY | OMV'
+  apt_repository:
+    repo: >
+      deb https://packages.openmediavault.org/public shaitan main
+    state: present
+  when:
+    - ansible_os_family == 'Debian'
+
+- name: 'APT | INSTALL OMV'
+  apt:
+    name:
+      - openmediavault-keyring
+      - openmediavault
+    update_cache: true
+    state: present
+  when:
+    - ansible_os_family == 'Debian'

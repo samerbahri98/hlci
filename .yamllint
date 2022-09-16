@@ -8,6 +8,8 @@ ignore: |
   kubespray
   ./**/playbooks/roles
   ansible-role-docker
+  k3s
+  k3s-ansible
 rules:
   braces: enable
   brackets: enable

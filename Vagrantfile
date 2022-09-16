@@ -15,6 +15,7 @@ rcfile["vms"].each do |vm_rc|
             end
             machine.ssh.forward_agent = true
             machine.vm.network "forwarded_port", guest: 2222, host: 2222
+            machine.vm.network "forwarded_port", guest: 8001, host: 8001
             machine.vm.network "public_network", use_dhcp_assigned_default_route: true , bridge: "wlp4s0"
             machine.vm.synced_folder ".", "/vagrant", mount_options: ["dmode=775,fmode=664"]
             machine.vm.provision "shell", path: vm_rc["bootstrap"]

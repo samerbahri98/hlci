@@ -1,0 +1,15 @@
+---
+- name: HELM | UNINSTALL NGINX
+  kubernetes.core.helm:
+    name: ingress-nginx
+    release_namespace: ingress-nginx
+    release_state: absent
+    wait: true
+    kubeconfig: "{{ K8S_AUTH_KUBECONFIG }}"
+- name: K8S | DELETE NAMESPACE
+  kubernetes.core.k8s:
+    name: ingress-nginx
+    kind: Namespace
+    api_version: v1
+    state: absent
+    kubeconfig: "{{ K8S_AUTH_KUBECONFIG }}"

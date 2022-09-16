@@ -1,0 +1,8 @@
+---
+- hosts: local
+  roles:
+    - k8s/nginx
+  vars:
+    state: absent
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ K8S_AUTH_KUBECONFIG }}"

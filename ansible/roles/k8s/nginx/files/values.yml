@@ -130,7 +130,6 @@ controller:
     configMapKey: ""
   service:
     enabled: true
-    allocateLoadBalancerNodePorts: true
     appProtocol: true
     annotations: {}
     labels: {}
@@ -148,6 +147,7 @@ controller:
     targetPorts:
       http: http
       https: https
+    allocateLoadBalancerNodePorts: true
     type: NodePort
     nodePorts:
       http: 32080

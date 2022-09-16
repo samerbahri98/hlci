@@ -1,0 +1,6 @@
+---
+- hosts: local
+  roles:
+    - k8s/nginx
+  vars:
+    state: present

@@ -1,0 +1,7 @@
+---
+- name: HELM REPOSITORY | IMPORT NGINX
+  kubernetes.core.helm_repository:
+    name: ingress-nginx
+    repo_url: https://kubernetes.github.io/ingress-nginx
+- name: NGINX | STATE
+  import_tasks: "{{ state }}.yml"

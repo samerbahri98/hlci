@@ -1,0 +1,4 @@
+---
+- import_playbook: k8s/bootstrap.yml
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ K8S_AUTH_KUBECONFIG }}"

@@ -1,0 +1,314 @@
+---
+commonLabels: {}
+controller:
+  name: controller
+  image:
+    chroot: false
+    registry: registry.k8s.io
+    image: ingress-nginx/controller
+    tag: "v1.3.1"
+    digest: |
+      sha256:54f7fe2c6c5a9db9a0ebf1131797109bb7a4d91f56b9b362bde2abd237dd1974
+    digestChroot: |
+      sha256:a8466b19c621bd550b1645e27a004a5cc85009c858a9ab19490216735ac432b1
+    pullPolicy: IfNotPresent
+    runAsUser: 101
+    allowPrivilegeEscalation: true
+  existingPsp: ""
+  containerName: controller
+  containerPort:
+    http: 80
+    https: 443
+  config: {}
+  configAnnotations: {}
+  proxySetHeaders: {}
+  addHeaders: {}
+  dnsConfig: {}
+  hostname: {}
+  dnsPolicy: ClusterFirst
+  reportNodeInternalIp: false
+  watchIngressWithoutClass: false
+  ingressClassByName: false
+  allowSnippetAnnotations: true
+  hostNetwork: false
+  hostPort:
+    enabled: false
+    ports:
+      http: 80
+      https: 443
+  electionID: ingress-controller-leader
+  ingressClassResource:
+    name: nginx
+    enabled: true
+    default: false
+    controllerValue: "k8s.io/ingress-nginx"
+    parameters: {}
+  ingressClass: nginx
+  podLabels: {}
+  podSecurityContext: {}
+  sysctls: {}
+  publishService:
+    enabled: true
+    pathOverride: ""
+  scope:
+    enabled: false
+    namespace: ""
+    namespaceSelector: ""
+  configMapNamespace: ""
+  tcp:
+    configMapNamespace: ""
+    annotations: {}
+  udp:
+    configMapNamespace: ""
+    annotations: {}
+  maxmindLicenseKey: ""
+  extraArgs: {}
+  extraEnvs: []
+  kind: Deployment
+  annotations: {}
+  labels: {}
+  updateStrategy: {}
+  minReadySeconds: 0
+  tolerations: []
+  affinity: {}
+  topologySpreadConstraints: []
+  terminationGracePeriodSeconds: 300
+  nodeSelector:
+    kubernetes.io/os: linux
+  livenessProbe:
+    httpGet:
+      path: "/healthz"
+      port: 10254
+      scheme: HTTP
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 5
+  readinessProbe:
+    httpGet:
+      path: "/healthz"
+      port: 10254
+      scheme: HTTP
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+  healthCheckPath: "/healthz"
+  healthCheckHost: ""
+  podAnnotations: {}
+  replicaCount: 1
+  minAvailable: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 90Mi
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 11
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+    behavior: {}
+  autoscalingTemplate: []
+  keda:
+    apiVersion: "keda.sh/v1alpha1"
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 11
+    pollingInterval: 30
+    cooldownPeriod: 300
+    restoreToOriginalReplicaCount: false
+    scaledObject:
+      annotations: {}
+    triggers: []
+    behavior: {}
+  enableMimalloc: true
+  customTemplate:
+    configMapName: ""
+    configMapKey: ""
+  service:
+    enabled: true
+    allocateLoadBalancerNodePorts: true
+    appProtocol: true
+    annotations: {}
+    labels: {}
+    externalIPs: []
+    loadBalancerIP: ""
+    loadBalancerSourceRanges: []
+    enableHttp: true
+    enableHttps: true
+    ipFamilyPolicy: "SingleStack"
+    ipFamilies:
+      - IPv4
+    ports:
+      http: 80
+      https: 443
+    targetPorts:
+      http: http
+      https: https
+    type: NodePort
+    nodePorts:
+      http: 32080
+      https: 32443
+      tcp:
+        8080: 32808
+    external:
+      enabled: true
+    internal:
+      enabled: false
+      annotations: {}
+      loadBalancerSourceRanges: []
+  shareProcessNamespace: false
+  extraContainers: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  extraInitContainers: []
+  extraModules: []
+  admissionWebhooks:
+    annotations: {}
+    enabled: true
+    extraEnvs: []
+    failurePolicy: Fail
+    port: 8443
+    certificate: "/usr/local/certificates/cert"
+    key: "/usr/local/certificates/key"
+    namespaceSelector: {}
+    objectSelector: {}
+    labels: {}
+    existingPsp: ""
+    networkPolicyEnabled: false
+    service:
+      annotations: {}
+      externalIPs: []
+      loadBalancerSourceRanges: []
+      servicePort: 443
+      type: ClusterIP
+    createSecretJob:
+      resources: {}
+    patchWebhookJob:
+      resources: {}
+    patch:
+      enabled: true
+      image:
+        registry: registry.k8s.io
+        image: ingress-nginx/kube-webhook-certgen
+        tag: v1.3.0
+        digest: |
+          sha256:549e71a6ca248c5abd51cdb73dbc3083df62cf92ed5e6147c780e30f7e007a47
+        pullPolicy: IfNotPresent
+      priorityClassName: ""
+      podAnnotations: {}
+      nodeSelector:
+        kubernetes.io/os: linux
+      tolerations: []
+      labels: {}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 2000
+        fsGroup: 2000
+  metrics:
+    port: 10254
+    enabled: false
+    service:
+      annotations: {}
+      externalIPs: []
+      loadBalancerSourceRanges: []
+      servicePort: 10254
+      type: ClusterIP
+    serviceMonitor:
+      enabled: false
+      additionalLabels: {}
+      namespace: ""
+      namespaceSelector: {}
+      scrapeInterval: 30s
+      targetLabels: []
+      relabelings: []
+      metricRelabelings: []
+    prometheusRule:
+      enabled: false
+      additionalLabels: {}
+      rules: []
+  lifecycle:
+    preStop:
+      exec:
+        command:
+          - /wait-shutdown
+  priorityClassName: ""
+revisionHistoryLimit: 10
+defaultBackend:
+  enabled: false
+  name: defaultbackend
+  image:
+    registry: registry.k8s.io
+    image: defaultbackend-amd64
+    tag: "1.5"
+    pullPolicy: IfNotPresent
+    runAsUser: 65534
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+  existingPsp: ""
+  extraArgs: {}
+  serviceAccount:
+    create: true
+    name: ""
+    automountServiceAccountToken: true
+  extraEnvs: []
+  port: 8080
+  livenessProbe:
+    failureThreshold: 3
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+  readinessProbe:
+    failureThreshold: 6
+    initialDelaySeconds: 0
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 5
+  tolerations: []
+  affinity: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  podLabels: {}
+  nodeSelector:
+    kubernetes.io/os: linux
+  podAnnotations: {}
+  replicaCount: 1
+  minAvailable: 1
+  resources: {}
+  extraVolumeMounts: []
+  extraVolumes: []
+  autoscaling:
+    annotations: {}
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 2
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+  service:
+    annotations: {}
+    externalIPs: []
+    loadBalancerSourceRanges: []
+    servicePort: 80
+    type: ClusterIP
+  priorityClassName: ""
+  labels: {}
+rbac:
+  create: true
+  scope: false
+podSecurityPolicy:
+  enabled: false
+serviceAccount:
+  create: true
+  name: ""
+  automountServiceAccountToken: true
+  annotations: {}
+imagePullSecrets: []
+tcp: {}
+udp: {}
+portNamePrefix: ""
+dhParam:

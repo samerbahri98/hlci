@@ -1,0 +1,10 @@
+---
+- name: HELM | INSTALL NGINX
+  kubernetes.core.helm:
+    name: ingress-nginx
+    chart_ref: ingress-nginx/ingress-nginx
+    chart_version: 4.2.5
+    release_namespace: ingress-nginx
+    kubeconfig: "{{ K8S_AUTH_KUBECONFIG }}"
+    create_namespace: true
+    values: "{{ lookup('file','values.yml') | from_yaml }}"

@@ -1,4 +1,4 @@
 ---
-- hosts: lnv1-local
+- hosts: hp2-local
   roles:
     - wireguard_client

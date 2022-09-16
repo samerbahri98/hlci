@@ -2,11 +2,12 @@
 - hosts: ac
   roles:
     - apt_upgrade
-    - common_essential_softwares
+    # - common_essential_softwares
     # - wireguard_client
     # - terraform
     # - rundeck_user
     # - fail2ban
     # - k8s_client
     # - remove_snap
-    - zsh
+    # - zsh
+    # - kvm

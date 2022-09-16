@@ -1,0 +1,4 @@
+---
+- hosts: hp3-local
+  roles:
+    - nginx

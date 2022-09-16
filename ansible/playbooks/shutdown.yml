@@ -1,0 +1,9 @@
+---
+- hosts: cluster
+  tasks:
+    - name: shutdown
+      command:
+        cmd: shutdown now
+      become: true
+      failed_when: false
+      changed_when: false

@@ -1,0 +1,4 @@
+---
+- hosts: homenet
+  roles:
+    - ip_forward

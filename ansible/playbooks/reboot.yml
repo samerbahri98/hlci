@@ -1,0 +1,7 @@
+---
+- hosts: cluster
+  tasks:
+    - name: reboot
+      reboot:
+        connect_timeout: 60
+      become: true

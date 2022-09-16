@@ -1,0 +1,12 @@
+---
+- hosts: homenet
+  roles:
+    - rundeck_user
+    - apt_upgrade
+    - common_essential_softwares
+    - ansible-role-docker
+    - kvm
+  vars:
+    docker_users:
+      - rundeck
+- import_playbook: reboot.yml
